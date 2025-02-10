@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""author: Gunnar Jansen, gunnar.jansen@unibe.ch
-
+"""
 A class that produces profiles through the Atlantic, Pacific, Indian and
 Southern Ocean. This class works only for the comparison of two models.
+
+Author: Gunnar Jansen, gunnar.jansen@unibe.ch
 """
 
 import matplotlib.pyplot as plt
@@ -11,6 +12,7 @@ import matplotlib.pyplot as plt
 from plot_helpers import area_mean_z
 
 class Profile(object):
+    """Author: Gunnar Jansen, gunnar.jansen@unibe.ch"""
     def __init__(self, dataset0=None, dataset1=None, variable=None, time=-1, scale=1, label='', title=''):
         self.dataset0 = dataset0
         self.dataset1 = dataset1

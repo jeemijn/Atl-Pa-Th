@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*- 
 """
 A collection of small functions that help to make Bern3D evaluation plots
+
+Authors: Gunnar Jansen, Jeemijn Scheen, Raphael Roth
 """
 
 import io

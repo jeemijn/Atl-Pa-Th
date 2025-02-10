@@ -3,8 +3,8 @@
 """
 A class to plot a Gruber section for the Bern3D model.
 
-Most functions in this file were made by
-Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+Original author: Gunnar Jansen, gunnar.jansen@unibe.ch
+Some modifications and extensions: Jeemijn Scheen
 """
 
 import plot_helpers as hlp
@@ -20,15 +20,14 @@ import seaborn as sns
 import functions as f
 
 class Gruber(object):
+    """Author: Gunnar Jansen, gunnar.jansen@unibe.ch"""
     def __init__(self, dataset=None, variable=None, time=-1, scale=1, title='', cmap=cmp.coolwarm, clabel='',
                  cmin=None, cmax=None, levels=10,
                  section_lat=[[-58, 67.5], [-58], [-58, 67.5]],
                  section_lon=[[335.5], [205, 328.5], [195]],
                  section_title=['Atlantic', 'Southern Ocean', 'Pacific'],
                  section_xticks=[[60, 30, 0, -30, -60], [200, 260, 320], [60, 30, 0, -30, -60]]):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch
-        
-        Inputs:
+        """Inputs:
           * dataset - xarray dataset object
           * variable - string of variable name from dataset
           * time - timestep to inspect in Gruber plot
@@ -55,6 +54,8 @@ class Gruber(object):
         Atlantic @335.5 lon_t, from 67.5 to -58 lat_t
         S.O.     @-58 lat_t, from 328.5 to 205 lon_t
         Pacific  @195 lon_t, from -58 to 67.5 lat_t
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
         """
         self.dataset = dataset
         self.variable = variable
@@ -71,16 +72,14 @@ class Gruber(object):
         self.section_title = section_title
         self.section_xticks = section_xticks
 
-        
-
     def set_xticklabels(self, axes, trajectory_map=False):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch, 
-        Adapted by jeemijn.scheen@climate.unibe.ch
-        
-        Sets and calculates appropriate x-axis ticks and labels.
+        """Sets and calculates appropriate x-axis ticks and labels.
         Includes automatic conversion from Bern3D coordinates to standard
         [-180, 180] and [0, 360] coordinates.
         - set trajectory_map=True for a (lon,lat) plot (trajectory plot) s.t. y ticks also changed
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl
         """
         for ax in axes:
 
@@ -120,12 +119,11 @@ class Gruber(object):
 
                 ax.set_xticklabels(xlabels)
 
-
     def get_cticks(self, lo, hi, levels, con_ticks=None):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch
-        
-        Sets and calculates appropriate color-axis ticks and labels.
+        """Sets and calculates appropriate color-axis ticks and labels.
         Includes ticks and labels for contour lines as well.
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
         """
         levels = self.levels
 
@@ -159,12 +157,10 @@ class Gruber(object):
 
         return ticks, tickslabel, conticks, cfmt
 
-
-
     def add_colorbar(self, fig, data, cbar_below=True, extend_both=False):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch
-        
-        Adds colorbar to the Gruber plot
+        """Adds colorbar to the Gruber plot.
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
         """
         if self.cmin is None:
             cmin = self.scale*np.nanmin(data)
@@ -215,7 +211,10 @@ class Gruber(object):
         Direction is implicitly defined by the shapes of lat_t, lon_t:
         - VERTICAL   if len(lat_t)=2, len(lon_t)=1 
         - HORIZONTAL if len(lat_t)=1, len(lon_t)=2
-        - DIAGONAL   if len(lat_t)=2, len(lon_t)=2  """
+        - DIAGONAL   if len(lat_t)=2, len(lon_t)=2
+        
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl"""
         
         if len(lat_t)==1:
             if len(lon_t)==2:
@@ -270,9 +269,7 @@ class Gruber(object):
 
 
     def get_section_data(self, lat_t, lon_t, vertical=True, diagonal=False, input_all_cells=False):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch
-        
-        Extract the correct section data from dataset.
+        """Extract the correct section data from dataset.
         Output: var (the data on T grid), x (corresponding slice of lat_u or lon_u axis).
 
         Important: Either lat_t or lon_t needs to be a [2, 1] list in ascending order.
@@ -284,7 +281,9 @@ class Gruber(object):
         i.e. with section_lon = [lon1, lon2, lon3, ..., lon_end] in any shape as opposed to the 
         default (input_all_cells=False) section_lon = [[lon_start,lon_end], [lon_start2, lon_end2]] etc
         NB if True then the options vertical and diagonal are ignored.
-        """
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl"""
         
         if input_all_cells:
             if len(lat_t) != len(lon_t):
@@ -381,9 +380,7 @@ class Gruber(object):
     def add_section(self, ax_upper, ax_lower, lat_t, lon_t, title='',
                     vertical=True, diagonal=False, invert_x=True, invert_y=True, 
                     input_all_cells=False, avoid_negative=False):
-        """author: G. Jansen, gunnar.jansen@climate.unibe.ch
-        
-        Adds a section to the Gruber plot.
+        """Adds a section to the Gruber plot.
         This method takes two axes as well as the section coordinates as input.
         Sections can be either vertical or horizontal depending on the boolean
         vertical, or they can be diagonal (boolean diagonal ignores boolean vertical).
@@ -394,7 +391,8 @@ class Gruber(object):
         i.e. with section_lon = [lon1, lon2, lon3, ..., lon_end] in any shape as opposed to the 
         default (input_all_cells=False) section_lon = [[lon_start,lon_end], [lon_start2, lon_end2]] etc
         NB if True then the options vertical, diagonal, invert_x and invert_y are ignored.
-        """
+
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch"""
 
         var, x = self.get_section_data(lat_t, lon_t, vertical, diagonal, input_all_cells=input_all_cells)
         
@@ -481,7 +479,10 @@ class Gruber(object):
           i.e. with section_lon = [lon1, lon2, lon3, ..., lon_end] in any shape as opposed to the 
           default (input_all_cells=False) section_lon = [[lon_start,lon_end], [lon_start2, lon_end2]] etc
         Output:
-        - figure handle of trajectory figure"""
+        - figure handle of trajectory figure
+        
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl"""
        
         sns.set_style('ticks')
         trajectory_fig, ax = plt.subplots(1)
@@ -536,8 +537,12 @@ class Gruber(object):
     
     def plot(self, trajectory_info=False, input_all_cells=False, cruise='', 
              cbar_extend_both=False, avoid_negative=False):
-        """Produces the complete Gruber section plot. Returns a matplotlib figure handle
-        - default output: figure handle
+        """This function can produce 2 types of section plots:
+        1. the complete Gruber section plot: straight through the Atl, SO and Pac [use: input_all_cells=False]
+        2. a specific cruise track, by giving in each grid cell                   [use: input_all_cells=True]
+        A 3rd option is available in function plot_straight(), which makes a single straight line section
+        
+        Input:
         - if trajectory_info: outputs [fig, section_lat, section_lon] to use for a direct
           call of: fig = self.plot_trajectory(section_lat, section_lon)
         - input_all_cells gives the option to directly prescribe all coordinates
@@ -546,7 +551,12 @@ class Gruber(object):
         - cruise gives the option to clarify cruise name in xlabel
         - cbar_extend_both [default False] forces a colorbar with arrows in both directions
         - avoid_negative [default False] plots (rare) negative concentrations as 0
-          """
+        
+        Output: 
+        - a matplotlib figure handle
+        
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl"""
 
         if len(self.dataset.lat_t) != 40 or len(self.dataset.lon_t) != 41:
             raise Exception("This function is only implemented for the new 40x41 grid.")
@@ -677,243 +687,74 @@ class Gruber(object):
             # were already present from initialization, but this function confirms these were actually used
         else:
             return fig
-
-
-    def plot_GA03_GA02N(self, old_grid=True, trajectory_info=False, avoid_negative=False, cbar_extend_both=False):
-        """This function is based on the standard Gruber plot() function, but
-        represents another transect: geotraces GA03 Leg 2, continuing on GA02N
         
-        - old_grid: this plot works for the old 36x36 grid and the new 40x41 grid
-        - default output: figure handle
+        
+    def plot_straight(self, vertical=True, diagonal=False, trajectory_info=False, 
+                      cbar_extend_both=False, avoid_negative=False):
+        """This function produces a 3rd type of section plot:
+        3. a section following a single straight line (either horizontal E-W, vertical N-S or diagonal)
+        See function plot() for the other 2 available types
+        
+        Input:
+        - vertical: True for a vertical (north-south); False for a horizontal (east-west) transect
+        - diagonal: True for a diagonal transect; overwrites boolean 'vertical'
         - if trajectory_info: outputs [fig, section_lat, section_lon] to use for a direct
           call of: fig = self.plot_trajectory(section_lat, section_lon)
-
-        This section is given in rempfer17epsl, supplementary Fig A4. Note that rempfer17epsl
-        wrongly names this total transect GA03 instead of GA03 Leg 2 + GA02N.
-        Source: https://www.bodc.ac.uk/geotraces/cruises/section_maps/atlantic_ocean
-
-        This function produces the complete section plot. Returns a matplotlib figure handle
+        - cbar_extend_both [default False] forces a colorbar with arrows in both directions
+        - avoid_negative [default False] plots (rare) negative concentrations as 0
         
-        IF ONE SECTION OF THE PLOT STAYS BLACK, CHECK IF THE XTICKS OF THAT SECTION ARE ON LAT RESP LON GRID.
-        For diagonal sections: lat ticks are needed if dx=dy (45 degrees) or dx<dy; otherwise lon.
-        """
-       
-        fig = plt.figure(figsize=(8, 4))
-        # set height ratios for subplots
-        gs = gridspec.GridSpec(2, 4, width_ratios=[2, 1, 1, 1], height_ratios=[1, 2])
-        ax0 = plt.subplot(gs[0])
-        ax1 = plt.subplot(gs[1])
-        ax2 = plt.subplot(gs[2])
-        ax3 = plt.subplot(gs[3])
-        ax4 = plt.subplot(gs[4])
-        ax5 = plt.subplot(gs[5])
-        ax6 = plt.subplot(gs[6])
-        ax7 = plt.subplot(gs[7])
+        Output: 
+        - a matplotlib figure handle
 
-        # change default section_lat and section_lon to GA03 + GA02N transect:
-        # consists of 4 subsections, starting from Western Africa: 
-        
-        if old_grid:
-            if len(self.dataset.lat_t) != 36 or len(self.dataset.lon_t) != 36:
-                raise Exception("ERROR: old_grid is set to True but grid is not the old 36x36 grid.")
-            # These sections reproduce the transect in rempfer17epsl Fig. A4, (wrongly) named GA03
-            # diagonal 6 cells; vertical 3 cells; diagonal 3 cells; vertical 2 cells
-            self.section_lon = [[345.0, 295.0], [295.0], [295.0, 315.0], [315.0]]
-            self.section_lat = [[7.983556145555406, 24.624318352164067], [28.178642740529867, 35.68533471265205], 
-                                [39.70901655306836, 48.590377890729144], [53.663942485386045, 59.441568214065114]]
-            self.section_title=['NW: Senegal to USA', 'to N', 'to NE', 'N: to Greenland']
-            self.section_xticks=[[10, 20], [30], [40, 50], [60]] # all are lat in this case           
-        else: # new grid
-            if len(self.dataset.lat_t) != 40 or len(self.dataset.lon_t) != 41:
-                raise Exception("ERROR: old_grid is set to False but grid is not the new 40x41 grid.")
-            # These sections convert the transect closest to rempfer17epsl Fig. A4, (wrongly) named GA03,
-            # to the new grid. Purpose: comparison to rempfer17epsl, Fig. 2
-            # 4 sections have resp. 9 diagonal cells; 3 vertical; 2 diagonal; 2 vertical
-            self.section_lon = [[349.5, 293.5], [293.5], [300.5, 307.5], [314.5]]
-            self.section_lat = [[7.5, 22.5], [27.5, 37.5], [42.5, 47.5], [52.5, 57.5]]
-            self.section_title=['NW: Senegal to USA', 'to N', 'to NE', 'N: to Greenland']
-            self.section_xticks=[[300, 320, 340], [30], [40, 50], [60]] # sec1 is lon; rest is lat in this case
-            # note that for diagonal sections, lat ticks are needed if dx=dy (45 degrees) or dx<dy; otherwise lon
-            
-        sec1 = self.add_section(ax0, ax4, self.section_lat[0], self.section_lon[0],
-                                title=self.section_title[0], diagonal=True, 
-                                invert_x=False, invert_y=True, avoid_negative=avoid_negative)
-        sec2 = self.add_section(ax1, ax5, self.section_lat[1], self.section_lon[1],
-                                title=self.section_title[1], vertical=True,
-                                invert_x=False, invert_y=True, avoid_negative=avoid_negative)
-        sec3 = self.add_section(ax2, ax6, self.section_lat[2], self.section_lon[2],
-                                title=self.section_title[2], diagonal=True, 
-                                invert_x=False, invert_y=True, avoid_negative=avoid_negative)
-        sec4 = self.add_section(ax3, ax7, self.section_lat[3], self.section_lon[3],
-                                title=self.section_title[3], vertical=True,
-                                invert_x=False, invert_y=True, avoid_negative=avoid_negative)
-
-        # Cosmetics: Remove spaces between subplots
-        plt.subplots_adjust(wspace=.0)
-        plt.subplots_adjust(hspace=.1)
-
-        # Cosmetics: Set overall figure title
-        #fig.suptitle(self.title, fontsize=14, ha='left')
-        fig.text(0.1, 1.0, self.title, ha='center', va='center',
-                 fontsize=14, bbox=dict(facecolor='none', edgecolor='black'))
-
-        # Cosmetics: Set overall y-Label
-        fig.text(0.06, 0.5, 'Depth (km)', ha='center', va='center',
-                 rotation='vertical', fontsize=14)
-
-        # Cosmetics: Set x-axis ticks
-        # Goal: north/south ticks on bottom of ax_lower
-        # east/west ticks on top of ax_upper
-        # all ticks are repeated (w/o label) at the 1 km boundary
-        ax0.set_xticks(self.section_xticks[0])
-        ax1.set_xticks(self.section_xticks[1])
-        ax2.set_xticks(self.section_xticks[2])
-        ax3.set_xticks(self.section_xticks[3])
-        ax4.set_xticks(self.section_xticks[0])
-        ax5.set_xticks(self.section_xticks[1])
-        ax6.set_xticks(self.section_xticks[2])
-        ax7.set_xticks(self.section_xticks[3])
-        self.set_xticklabels(plt.gcf().get_axes()) # add degree N,W,S,E
-       
-        # Cosmetics: Turn off y-axis tick labels on all sections except first
-        plt.setp(ax1.get_yticklabels(), visible=False)
-        plt.setp(ax2.get_yticklabels(), visible=False)
-        plt.setp(ax3.get_yticklabels(), visible=False)
-        plt.setp(ax5.get_yticklabels(), visible=False)
-        plt.setp(ax6.get_yticklabels(), visible=False)
-        plt.setp(ax7.get_yticklabels(), visible=False)
-
-        # Cosmetics: Turn ocean topography black
-        for ax in plt.gcf().get_axes():
-            ax.set_facecolor('k')
-
-        # Colorbar
-        self.add_colorbar(fig, np.hstack([sec1, sec2, sec3, sec4]))
-
-        if trajectory_info:
-            return [fig, self.section_lat, self.section_lon] # were set above depending on old_grid
-        else:
-            return fig
-        
-        
-    def plot_GA02(self, trajectory_info=False, avoid_negative=False, cbar_extend_both=False):
-        """This function is based on the standard Gruber plot() function, but
-        represents another transect: geotraces GA02 (all 3 legs)
-        
-        - default output: figure handle
-        - if trajectory_info: outputs [fig, section_lat, section_lon] to use for a direct
-          call of: fig = self.plot_trajectory(section_lat, section_lon)
-
-        Source: https://www.bodc.ac.uk/geotraces/cruises/section_maps/atlantic_ocean and cruise reports therein
-
-        This function produces the complete section plot. Returns a matplotlib figure handle
-        
-        IF ONE SECTION OF THE PLOT STAYS BLACK, CHECK IF THE XTICKS OF THAT SECTION ARE ON LAT RESP LON GRID.
-        For diagonal sections: lat ticks are needed if dx=dy (45 degrees) or dx<dy; otherwise lon.
-        """
-       
-        fig = plt.figure(figsize=(8, 4))
-        # set height ratios for subplots
-        gs = gridspec.GridSpec(2, 7, width_ratios=[3, 2, 3, 1, 1, 2, 1], height_ratios=[1, 2])
-        ax0 = plt.subplot(gs[0])
-        ax1 = plt.subplot(gs[1])
-        ax2 = plt.subplot(gs[2])
-        ax3 = plt.subplot(gs[3])
-        ax4 = plt.subplot(gs[4])
-        ax5 = plt.subplot(gs[5])
-        ax6 = plt.subplot(gs[6])
-        ax7 = plt.subplot(gs[7])
-        ax8 = plt.subplot(gs[8])
-        ax9 = plt.subplot(gs[9])
-        ax10 = plt.subplot(gs[10])
-        ax11 = plt.subplot(gs[11])
-        ax12 = plt.subplot(gs[12])
-        ax13 = plt.subplot(gs[13])
-
-        # change default section_lat and section_lon to GA02 transect:
-        # consists of 7 subsections, starting from South Argentina through the Western Atlantic to Greenland:
-        # diagonal cells; diagonal; diagonal; 2 vertical; 2 horizontal; diagonal; diagonal 
-        #   with nr of diagonal cells depending on how angle is (Bresenham algorithm has chosen automatically)
+        Author: Gunnar Jansen, gunnar.jansen@unibe.ch
+        Adapted by Jeemijn Scheen, jeemijn.scheen@nioz.nl"""
         
         if len(self.dataset.lat_t) != 40 or len(self.dataset.lon_t) != 41:
-            raise Exception("ERROR: grid is not 40x41.")
-        self.section_lon = [[307.5,328.5],[328.5,335.5],[328.5,300.5],[293.5],[293.5,300.5],[307.5,321.5],[314.5,328.5]]
-        self.section_lat = [[-50.0,-22.5],[-17.5,-1.5],[-1.5,17.5],[22.5,27.5],[32.5],[32.5,47.5],[52.5,62.5]]
-        self.section_title=['NE from South Argentina','','NW to Bermuda','','','NE to Greenland','']
-        self.section_xticks=[[-40],[-20],[0],[20],[300],[40],[60]] # sec5 is lon; rest is lat in this case
-        # note that for diagonal sections, lat ticks are needed if dx=dy (45 degrees) or dx<dy; otherwise lon
-            
-        sec1 = self.add_section(ax0, ax7, self.section_lat[0], self.section_lon[0],
-                                title=self.section_title[0], diagonal=True, 
-                                invert_x=False, invert_y=True)
-        sec2 = self.add_section(ax1, ax8, self.section_lat[1], self.section_lon[1],
-                                title=self.section_title[1], diagonal=True,
-                                invert_x=False, invert_y=True)
-        sec3 = self.add_section(ax2, ax9, self.section_lat[2], self.section_lon[2],
-                                title=self.section_title[2], diagonal=True, 
-                                invert_x=False, invert_y=True)
-        sec4 = self.add_section(ax3, ax10, self.section_lat[3], self.section_lon[3],
-                                title=self.section_title[3], vertical=True,
-                                invert_x=False, invert_y=True)
-        sec5 = self.add_section(ax4, ax11, self.section_lat[4], self.section_lon[4],
-                                title=self.section_title[4], vertical=False,
-                                invert_x=False, invert_y=True)
-        sec6 = self.add_section(ax5, ax12, self.section_lat[5], self.section_lon[5],
-                                title=self.section_title[5], diagonal=True,
-                                invert_x=False, invert_y=True)
-        sec7 = self.add_section(ax6, ax13, self.section_lat[6], self.section_lon[6],
-                                title=self.section_title[6], diagonal=True,
-                                invert_x=False, invert_y=True)
+            raise Exception("This function is only implemented for the new 40x41 grid.")
+
+        fig = plt.figure(figsize=(8, 4))
+
+        # set height ratios for subplots
+        gs = gridspec.GridSpec(2, 1, height_ratios=[1, 2])
+        ax0 = plt.subplot(gs[0])
+        ax3 = plt.subplot(gs[1])
+
+        sec1 = self.add_section(ax0, ax3, self.section_lat, self.section_lon,
+                                title='', vertical=vertical, diagonal=diagonal,
+                                invert_x=False, invert_y=True, avoid_negative=avoid_negative)
 
         # Cosmetics: Remove spaces between subplots
         plt.subplots_adjust(wspace=.0)
         plt.subplots_adjust(hspace=.1)
+     
+        # Cosmetics: Set x-axis ticks
+        # This can be improved
+        ax0.set_xticks(self.section_xticks[0])
+        ax3.set_xticks(self.section_xticks[0])
+        self.set_xticklabels(plt.gcf().get_axes()) # add degree N, S, W
+
+        # Colorbar
+        self.add_colorbar(fig, sec1, extend_both=cbar_extend_both)
 
         # Cosmetics: Set overall figure title
-        #fig.suptitle(self.title, fontsize=14, ha='left')
         fig.text(0.1, 1.0, self.title, ha='center', va='center',
                  fontsize=14, bbox=dict(facecolor='none', edgecolor='black'))
 
         # Cosmetics: Set overall y-Label
         fig.text(0.06, 0.5, 'Depth (km)', ha='center', va='center',
                  rotation='vertical', fontsize=14)
-
-        # Cosmetics: Set x-axis ticks
-        # Goal: north/south ticks on bottom of ax_lower
-        # east/west ticks on top of ax_upper
-        # all ticks are repeated (w/o label) at the 1 km boundary
-        ax0.set_xticks(self.section_xticks[0])
-        ax1.set_xticks(self.section_xticks[1])
-        ax2.set_xticks(self.section_xticks[2])
-        ax3.set_xticks(self.section_xticks[3])
-        ax4.set_xticks(self.section_xticks[4])
-        ax5.set_xticks(self.section_xticks[5])
-        ax6.set_xticks(self.section_xticks[6])
-        ax7.set_xticks(self.section_xticks[0])
-        ax8.set_xticks(self.section_xticks[1])
-        ax9.set_xticks(self.section_xticks[2])
-        ax10.set_xticks(self.section_xticks[3])
-        ax11.set_xticks(self.section_xticks[4])
-        ax12.set_xticks(self.section_xticks[5])
-        ax13.set_xticks(self.section_xticks[6])
-        self.set_xticklabels(plt.gcf().get_axes()) # add degree N,W,S,E
-
-        # Cosmetics: Turn off y-axis tick labels on all sections except first (upper+lower ax)
-        for axis in [ax1, ax2, ax3, ax4, ax5, ax6, ax8, ax9, ax10, ax11, ax12, ax13]:            
-            plt.setp(axis.get_yticklabels(), visible=False)
-
+        
         # Cosmetics: Turn ocean topography black
-        for ax in plt.gcf().get_axes():
-            ax.set_facecolor('k')
-
-        # Colorbar
-        self.add_colorbar(fig, np.hstack([sec1, sec2, sec3, sec4, sec5, sec6, sec7]))
+        for ax_nr,ax in enumerate(plt.gcf().get_axes()):
+            if ax_nr % 3 != 2: # excluding colorbars (assuming every 3rd axis) because gives ugly black behind extension arrow
+                ax.set_facecolor('k')
 
         if trajectory_info:
-            return [fig, self.section_lat, self.section_lon]
+            return [fig, self.section_lat, self.section_lon] 
+            # were already present from initialization, but this function confirms these were actually used
         else:
             return fig
-
+     
 
     def Bresenham(self, x0, y0, x1, y1):
         """Bresenham line algorithm to convert a diagonal line to i,j pixels
@@ -932,6 +773,8 @@ class Gruber(object):
 
         Output:
         - [row, col]: arrays with T-grid x,y indices of resulting section
+
+        Author: Jeemijn Scheen, jeemijn.scheen@nioz.nl
         """
 
         for coord in [x0, y0, x1, y1]:
@@ -1014,3 +857,4 @@ class Gruber(object):
         # plt.grid()
 
         return row, col
+    

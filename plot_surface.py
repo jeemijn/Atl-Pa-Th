@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-   
 """
 A class to generate surface plots for the Bern3D model
+
 Author: Gunnar Jansen, gunnar.jansen@unibe.ch
 """
 
@@ -12,6 +13,7 @@ import matplotlib.cm as cmp
 from plot_helpers import extend
 
 class Surface(object):
+    """Author: Gunnar Jansen, gunnar.jansen@unibe.ch"""
     def __init__(self, dataset=None, variable=None, time=-1, scale=1, landmask=None,
                  cmap=cmp.coolwarm, clabel='', cmin=None, cmax=None, title=''):
         self.dataset = dataset

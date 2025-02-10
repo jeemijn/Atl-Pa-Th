@@ -62,7 +62,7 @@ def plot_regions_map(ax, full_obj, ymax=5.0, verbose=False, title='Defined regio
 
    if verbose:
       print('regions setting:', regions, '\n')
-      # print region info in T coordinates TODO better in u,v?
+      # print region info in T coordinates
       lon_t = full_obj.lon_t.values
       lat_t = full_obj.lat_t.values
       for region_nr, [lons,lats] in regions.items():
@@ -74,7 +74,7 @@ def plot_regions_map(ax, full_obj, ymax=5.0, verbose=False, title='Defined regio
    X,Y = meshgrid(lon_u, lat_u) # u grid because pcolor needs left bottom corner
 
    # plot map
-   ax.pcolormesh(X, Y, land_mask[2].values, cmap='Greys', vmin=-0.25, vmax=0.25) # land
+   ax.pcolormesh(X, Y, land_mask[2].values, cmap='Dark2')  # green land
    ax.set_title(title)
 
    if Bern3D_grid:
@@ -1408,7 +1408,7 @@ def get_sim(memberid, path, obs_ave, ensemble, convert_unit_to_obs=True, no_res_
     Output:
     For Pad, Thd columns present in obs_ave: Pad and Thd values of model output of memberid. 
     For Pap, Thp columns present in obs_ave: Pap and Thp values of model output of memberid. 
-    For pa_th_ratio_p column present in obs_ave: Pap and Thp values of model output of memberid. 
+    For path_ratio_p column present in obs_ave: Pap and Thp values of model output of memberid. 
     This output is provided in 2 ways:
     - res_table is a pandas dataframe (table) with the model result of Pad,Thd resp. Pap,Thp only in the grid cells where 
       obs are present. Unit depends on convert_unit_to_obs (see above)
@@ -1485,6 +1485,7 @@ def get_sim(memberid, path, obs_ave, ensemble, convert_unit_to_obs=True, no_res_
                 res_entire.Thd.sel(lat_t=this_lat, lon_t=this_lon, z_t=this_z).isel(time=-1))]
     if form == 'p':
         res_table = pd.DataFrame(index=obs_index, dtype='float64', columns=['Pap', 'Thp'])
+        res_table.sort_index(inplace=True)
         for (this_lat, this_lon, this_z) in obs_index:
             res_table.loc[(this_lat, this_lon, this_z),('Pap','Thp',)] = [float(
                 res_entire.Pap.sel(lat_t=this_lat, lon_t=this_lon, z_t=this_z).isel(time=-1)),
@@ -1662,7 +1663,6 @@ def calc_rmse(model, observation, weights=None, verbose=False):
 
         
 # based on a copy of calc_rmse
-# TODO or is calc_rmse(...,sigma_obs, *args, *kwargs) the nicer way to let verbose etc inherit?
 def calc_mae(model, observation, weights=None, verbose=False):
     """Returns the mean abolute error MAE of model-observation for 1 var.
     ASSUMPTION: takes last time step if multiple time steps present
@@ -2354,7 +2354,7 @@ def add_sw_obs(fig, var, obs_ave, cruise, model_coords_of_cruise, cmap, vmin, vm
     
     if var[-3:] == '_Bq':
         var = var[:-3]  # remove '_Bq'
-    if not var in ['Pad', 'Thd', 'Pap', 'Thp']:
+    if not var in ['Pad', 'Thd', 'Pap', 'Thp', 'path_ratio_p']:
         raise Exception("Unvalid var.")
         
     axlist = fig.axes
@@ -2860,17 +2860,17 @@ def generate_1_section_plot_fig(dataset, variable, cruise, basic_data, title='',
                            cbar_extend_both=cbar_extend_both, avoid_negative=avoid_negative)
     # add obs
     if obs:
-        if variable[2] == 'd': # dissolved
+        # for path_ratio_p/d to work, var path_ratio_p/d should be added to the obs_p/d_ave object. 
+        if variable[2] == 'd' or variable == 'path_ratio_d':  # dissolved
             fig = add_sw_obs(fig, var=variable, obs_ave=obs_d_ave, cruise=cruise, cmap=cmap, 
                              vmin=this_vmin, vmax=vmaxs[variable], 
                              model_coords_of_cruise=model_coords_per_cruise[cruise], verbose=verbose)
-        elif variable[2] == 'p': # p-bound
+        elif variable[2] == 'p' or variable == 'path_ratio_p': # p-bound
             fig = add_sw_obs(fig, var=variable, obs_ave=obs_p_ave, cruise=cruise, cmap=cmap, 
                              vmin=this_vmin, vmax=vmaxs[variable], 
                              model_coords_of_cruise=model_coords_per_cruise[cruise], verbose=verbose)
-        elif variable[0:10] == 'path_ratio':
-            raise Exception("Adding observations is not implemented at the moment for seawater ratio")
-            # to implement: useful at all? how to handle averaging with uncertainties?
+        else:
+            raise Exception("variable "+var+" unknown")
     
     if cruise in cruise_directions.keys():
         axlist = plt.gcf().get_axes()
@@ -2907,6 +2907,10 @@ def generate_trajectory_fig(cruise, basic_data, verbose=False, title=''):
         zoom_atl = True
     else:
         zoom_atl = False
+    if cruise in ['GP16', 'GPc01', 'GSc02', 'pavia']:
+        zoom_pac = True
+    else:
+        zoom_pac = False
 
     assert len(basic_data) == 4, "smt wrong with basic_data"
     [dataset, t, model_coords_per_cruise, cmap] = basic_data
@@ -2939,6 +2943,16 @@ def generate_trajectory_fig(cruise, basic_data, verbose=False, title=''):
         fig.set_size_inches(2.5, 4)
         # overwrite xticks
         axis.set_xticks([270,300,330,360,390])
+        # add '°W' etc
+        axis = convert_ticks_of_map(axis, Bern3D_grid=True)
+        axis.tick_params(axis='x', labelsize=11)
+        axis.tick_params(axis='y', labelsize=11)
+    if zoom_pac:
+        axis.set_xlim(100,304)
+        # change size of existing figure
+        fig.set_size_inches(2.5, 4)  # still as for Atl
+        # overwrite xticks
+        axis.set_xticks([135,180,225,270])  # every 45 degrees
         # add '°W' etc
         axis = convert_ticks_of_map(axis, Bern3D_grid=True)
         axis.tick_params(axis='x', labelsize=11)
