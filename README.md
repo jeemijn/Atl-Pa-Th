@@ -10,8 +10,7 @@ Study on Atlantic protactinium (Pa) and thorium (Th).
 
 ### Steps
 1. Download the model output from the model output repository on zenodo (https://doi.org/10.5281/zenodo.14791063) and place in subfolder 'modeloutput'.
-2. Download the Geotraces data files Pad_Thd_IDP2021.txt & Pad_Thd_IDP2021.txt (2x ~25 Mb) and place in subfolder 'data'. (TODO A better manual follows later)
-3. Use the .ipynb notebooks to reproduce or edit figures. Documentation is inside the notebooks. It is not necessary to read the .py scripts.
+2. Use the .ipynb notebooks to reproduce or edit figures. Documentation is inside the notebooks. It is not necessary to read the .py scripts.
 
 ### Where to find which figure:  
 | Figure |is made in  |

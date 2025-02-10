@@ -1,0 +1,30 @@
+nc Variable	Variable	Units	Description
+
+metavar1	Cruise		
+metavar2	Station		
+metavar3	Type		
+longitude	Longitude	degrees_east	
+latitude	Latitude	degrees_north	
+metavar4	Bot. Depth	m	Bottom depth
+metavar5	Operator's Cruise Name		
+metavar6	Ship Name		
+metavar7	Period		
+metavar8	Chief Scientist		
+metavar9	GEOTRACES Scientist		
+metavar10	Cruise Aliases		
+metavar11	Cruise Information Link		
+metavar12	BODC Cruise Number		
+date_time	Decimal Gregorian Days of the station	days since 2006-01-01 00:00:00 UTC	Relative Gregorian Days with decimal part
+			
+var1	CTDPRS_T_VALUE_SENSOR	dbar	Pressure from CTD sensor
+var2	DEPTH	m	Depth below sea surface calculated from pressure
+var3	Pa_231_D_CONC_BOTTLE	uBq/kg	Concentration (or activity) of dissolved 231Pa
+var4	Pa_231_D_CONC_FISH	uBq/kg	Concentration (or activity) of dissolved 231Pa
+var5	Pa_231_D_CONC_UWAY	uBq/kg	Concentration (or activity) of dissolved 231Pa
+var6	Pa_231_D_CONC_BOAT_PUMP	uBq/kg	Concentration (or activity) of dissolved 231Pa
+var7	Pa_231_D_CONC_SUBICE_PUMP	uBq/kg	Concentration (or activity) of dissolved 231Pa
+var8	Th_230_D_CONC_BOTTLE	uBq/kg	Concentration (or activity) of dissolved 230Th
+var9	Th_230_D_CONC_FISH	uBq/kg	Concentration (or activity) of dissolved 230Th
+var10	Th_230_D_CONC_UWAY	uBq/kg	Concentration (or activity) of dissolved 230Th
+var11	Th_230_D_CONC_BOAT_PUMP	uBq/kg	Concentration (or activity) of dissolved 230Th
+var12	Th_230_D_CONC_SUBICE_PUMP	uBq/kg	Concentration (or activity) of dissolved 230Th
