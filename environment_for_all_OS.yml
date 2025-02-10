@@ -25,4 +25,7 @@ dependencies:
   - cmcrameri
   - netcdf4
   - xesmf
+  - texlive-core
+  - pip
+  - anaconda::pypdf2
 prefix: /Applications/anaconda3

@@ -1,10 +1,8 @@
 TUNING README
-This readme describes the tuning of the Pa/Th module of the Bern3D model via the usage of .py, .ipynb, .csv, and .parameter files,
-located in the current folder and subfolder 0_methods_B_tuning_files.
+This readme describes the tuning of the Pa/Th module of the Bern3D model via the usage of .py, .ipynb, .csv, and .parameter files, located in the current folder and subfolder 0_methods_B_tuning_files.
 
 This readme was published in the zenodo repository https://doi.org/10.5281/zenodo.10622403 along with the paper:
-Jeemijn Scheen, Jörg Lippold, Frerk Pöppelmeier, Finn Süfke and Thomas F. Stocker. Promising regions for detecting 
-the overturning circulation in Atlantic 231Pa/230Th: a model-data comparison. Paleoceanography and Paleoclimatology, 2025.
+Jeemijn Scheen, Jörg Lippold, Frerk Pöppelmeier, Finn Süfke and Thomas F. Stocker. Promising regions for detecting the overturning circulation in Atlantic 231Pa/230Th: a model-data comparison. Paleoceanography and Paleoclimatology, 2025.
 
 We gratefully acknowledge Marco Steinacher and Sebastian Lienert for their contributions to the latin hypercube sampling scripts. 
 
@@ -21,27 +19,18 @@ STEPS OF TUNING PROCEDURE (for each ensemble):
 - Using: 
 	0_methods_B_tuning_1_sample.py
 	0_methods_B_tuning_files/parameters_XXX.csv
-- For each ensemble (e.g. '3P5'), parameters_3P5.csv was filled with the desired settings about the parameters, 
-	their ranges and assumed statistical distributions to sample from. We chose a uniform distribution in all cases.
-- 0_methods_B_tuning_1_sample.py generated the desired number of parameter sets, based on parameters_3P5.csv. Optionally, 
-	the script can also generate some plots. The script writes out parameter sets (e.g. 3000) to parameters_3P5_sampled.csv.
+- For each ensemble (e.g. '3P5'), parameters_3P5.csv was filled with the desired settings about the parameters, their ranges and assumed statistical distributions to sample from. We chose a uniform distribution in all cases.
+- 0_methods_B_tuning_1_sample.py generated the desired number of parameter sets, based on parameters_3P5.csv. Optionally, the script can also generate some plots. The script writes out parameter sets (e.g. 3000) to parameters_3P5_sampled.csv.
 - NOTE: for ensemble KDE, no sampling was performed. Instead, parameters_KDE_sampled_after_constraints.csv was created manually directly.
 
 2. CONSTRAIN PARAMETER SETS:
 - Using: 
 	0_methods_B_tuning_2_constrain_param_sets.ipynb
 	0_methods_B_tuning_files/parameters_XXX_sampled.csv
-- The notebook 0_methods_B_tuning_2_constrain_param_sets.ipynb was used to edit the parameter sets. 
-	It reads in parameters_3P5_sampled.csv and writes out parameters_3P5_sampled_after_constraints.csv.
-	It reads in parameters_2TU_sampled.csv and writes out parameters_2TU_sampled_after_constraints.csv.
-	What this notebook does: 
-		I.	change setIDS from 0, 1, ..., 3000 to 1000, 1001, ..., 4000 for practical reasons 
-		(runnames must have same length and trailing zeros like 0001 did not work as they are deleted in slurm array jobs)
-		II. [only for ensemble 2TU:] constrain the parameter sets to only keep combinations that make sense, based on the literature. 
-		Since applying these constraints in ensemble 2TU did not solve the issues with tuning all parameters simultaneously, 
-		this approach was discarded in later ensembles such as 3P5. Instead we used a 3-step tuning approach (1. ws, 2. kdes, 3. sigmas). 
-	NOTE: for ensemble 3P5, the resulting csv is also called _sampled_after_constraints.csv for consistency, even though no constraints 
-	were applied (only the setIDs were changed).
+- The notebook 0_methods_B_tuning_2_constrain_param_sets.ipynb was used to edit the parameter sets. It reads in parameters_XXX_sampled.csv and writes out parameters_XXX_sampled_after_constraints.csv. What this notebook does: 
+I. change setIDS from 0, 1, ..., 3000 to 1000, 1001, ..., 4000 for practical reasons (runnames must have same length and trailing zeros like 0001 did not work as they are deleted in slurm array jobs)
+II. [only for ensemble 2TU:] constrain the parameter sets to only keep combinations that make sense, based on the literature. Since applying these constraints in ensemble 2TU did not solve the issues with tuning all parameters simultaneously, this approach was discarded in later ensembles such as 3P5. Instead we used a 3-step tuning approach (1. ws, 2. kdes, 3. sigmas). 
+NOTE: for ensemble 3P5, the resulting csv is also called _sampled_after_constraints.csv for consistency, even though no constraints were applied (only the setIDs were changed).
 - Recall: for ensemble KDE, the file parameters_KDE_sampled_after_constraints.csv was created manually directly.
 
 3. GENERATE PARAMETER FILES:
@@ -49,17 +38,14 @@ STEPS OF TUNING PROCEDURE (for each ensemble):
 	0_methods_B_tuning_3_generate_param_files.py
 	0_methods_B_tuning_files/paramfile_templates/
 	0_methods_B_tuning_files/parameters_XXX_sampled_after_constraints.csv
-- 0_methods_B_tuning_3_generate_param_files.py creates parameter files suitable for running the Bern3D model,
-based on desired parameter sets as given in parameters_XXX_sampled_after_constraints.csv
-For each row of the csv file (1 parameter set), the 6 parameter files needed for 1 model run are generated.
-- 0_methods_B_tuning_files/paramfile_templates/ is used as input and 0_methods_B_tuning_files/paramfiles/ as output.
+- 0_methods_B_tuning_3_generate_param_files.py creates parameter files suitable for running the Bern3D model, based on desired parameter sets as given in parameters_XXX_sampled_after_constraints.csv. 0_methods_B_tuning_files/paramfile_templates/ is used as input and 0_methods_B_tuning_files/paramfiles/ as output.
+- For each row of the csv file (1 parameter set), the 6 parameter files needed for 1 model run are generated.
 
 RUN SIMULATIONS:
 - Using:
 	0_methods_B_tuning_files/paramfiles
 	Bern3D model
-- The filename convention for model runs is EEENNNNPPP, with:
-	EEE the ensemble (2TU, KDE or 3P5); NNNN the Set ID starting from 1000 in steps of 1; PPP the phase (always _PI)
+- The filename convention for model runs is EEENNNNPPP, with EEE the ensemble (2TU, KDE or 3P5); NNNN the Set ID starting from 1000 in steps of 1; PPP the phase (always _PI).
 - The output from the 3595 tuning runs is not published along, but resulting MAEs, median concentrations, and mean residence times are.
 - After running all tuning simulations with the Bern3D model, the results are analyzed:
 

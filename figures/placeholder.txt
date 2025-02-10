@@ -1,2 +1,2 @@
-Generated figures will appear in this folder. 
+Generated figures will appear in this folder when running the notebooks. 
 (Git doesn't store empty folders, therefore this placeholder.)
