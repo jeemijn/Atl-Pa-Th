@@ -1,0 +1,11 @@
+﻿#Model component [string],#Parameter name [string],#Parameter units [string],#Standard value [float],#Minimum value [float],#Maximum value [float],"#Distribution type [string] ""uni"", ""norm"", ""truncnorm"", or ""lognorm""",#Dist. param1 [float] (only relevant for truncnorm and lognorm),#Dist. param2 [float] (only relevant for truncnorm and lognorm)
+BGC,sigmaPaPOC,m^2/(mol C),0.028,0.011,0.045,uni,-9999,-9999
+BGC,sigmaPaCa,m^2/(mol C),0.037,0.000069,0.073,uni,-9999,-9999
+BGC,sigmaPaOp,m^2/(mol Si),0.09,0.00084,0.18,uni,-9999,-9999
+BGC,sigmaPaDu,m^2/(g dust),0.028,0.000012,0.056,uni,-9999,-9999
+BGC,sigmaPaNeph,m^2/(g neph),0.028,0.000012,0.056,uni,-9999,-9999
+BGC,sigmaThPOC,m^2/(mol C),0.15,0.028,0.28,uni,-9999,-9999
+BGC,sigmaThCa,m^2/(mol C),0.95,0.0023,1.9,uni,-9999,-9999
+BGC,sigmaThOp,m^2/(mol Si),0.13,0.0026,0.26,uni,-9999,-9999
+BGC,sigmaThDu,m^2/(g dust),0.06,0.000088,0.12,uni,-9999,-9999
+BGC,sigmaThNeph,m^2/(g neph),0.06,0.000088,0.12,uni,-9999,-9999

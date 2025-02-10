@@ -1,0 +1,24 @@
+# freshwater (fw) begin (year)
+fwbegin                                     5010
+# fw end (year)
+fwend                                       5020
+# fw input region (position before the decimal point in fwmask)
+fwinputregion                               1
+# fw input location: begin, end (theta=[-90,90] deg)
+thetabegin                                  45
+thetaend                                    70
+# fw maximum amount (Sv)
+fwmaximumamount                             0.25
+# fw shape (1=rectangle, 2=triangle)
+fwshape                                     2
+# compensation of the fw input? (yes=.true., no=.false.)
+fwcompensation                              .false.
+# negative fw input? (yes=.true., no=.false.), if yes: startyear
+negativefwinput                             .true.
+# the following lines are only relevant if negativefwinput = .true.
+# negative fw begin (default = fwend)
+negativefwbegin                             5025
+# negative fw end (default discharge length = length of positive discharge)
+negativefwend                               5035
+# negative fw maximum amount (Sv) (default = fwmaximumamount)
+negativefwmaximumamount                     0.25

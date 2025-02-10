@@ -1,0 +1,40 @@
+# name of topography, landmask, etc. files (a11)
+world                                    world_41x40
+# initial southern surface temperature (deg C)
+temp0                                    20.
+# initial northern surface temperature (deg C)
+temp1                                    20.
+# velocity relaxation parameter (ratio)
+rel                                      0.85
+# scaling factor for windstress forcing (ratio)
+scf                                      2.
+# isopycnal (horizontal) diffusion constant (m^2/s)
+diff-iso                                 1000.
+# diapycnal (vertical) diffusion constant (m^2/s)
+diff-dia                                 2.e-5
+# Gent-McWilliams parameter (m^2/s)
+gmkap                                    2000.
+# diapycnal (vertical) diffusion constant (m^2/s) for non-dynamic tracers
+# (only if turned on with '_tracerdiff')
+diff-diatr                               2.e-5
+# inverse minimum drag (days)
+idrag                                    2.
+# drag multiplication factor at ocean margins
+drgf                                     2.5
+# freshwater flux correction (in Sv from regionFrom to regionTo)
+# is only done when flag _atmmbc or _atmebm is set; regions are taken from fwmask;
+# the number in regionFrom and regionTo corresponds to the position after the
+# decimal point in fwmask
+# FOR EBM: choose
+# North of 30N:
+regionFrom                               1
+regionTo                                 3
+fwamount                                 0.0
+# South of 30N:
+regionFrom_south                         2
+regionTo_south                           4
+fwamount_south                           0.0
+# FOR MBC: choose
+#regionFrom                               1
+#regionTo                                 3
+#fwamount                                 0.0

@@ -1,0 +1,47 @@
+# Main configuration file
+#<-- Parameter name (40 chars) --------><-- Parameter value ------------------->
+
+# length of the run in timesteps
+nsteps                                  480000
+
+# inverse output frequency for standard output in tempsteps
+npstp                                   480000
+
+# inverse output frequency for full output/restart file
+iwstp                                   480000
+
+# inverse output frequency for timeseries output
+itstp                                   96
+
+# netcdf output precision (single or double)
+precision                               double
+
+# new ('n'), continuing ('c') or physics-only restart ('p') run
+ans                                     c
+
+# filename of restart file (also for separate sediment restart files)
+lin_name                                SPIN3INTEL.0001765
+
+# output number of restart file
+lin_nr                                  001
+
+# Nd, Pa/Th, Be: Particle files are imported if flags _PrescCpCd_Nd or _PrescPart_PaTh are set
+PartExpFluxesFile                       RESTART___.0005000
+# Nd, Pa/Th, Be: output number of particle fields
+PartExpLineNr                           001
+
+# time (year AD) for start of run (choose -1. to take time from restart)
+# year for orbital forcing if ebm_const_insol is chosen
+# classically 1765 for pre-industrial
+t00                                     1765.
+
+# timesteps/year
+ndtyear                                 96
+
+# if flag _defoutputyears is chosen, provide list of years (AD, comma-separated)
+# full_ave output is written for the previous year 
+# year specified refers to the restart year
+outyrlist                               1751,1810,1820,1830,1850,2750,3750
+
+# Run description (max. 200 chars, can be changed by modifying _cdf_max_strlen)
+rundesc                                 Run for parameter tuning of Pa Th parameters (in BGC file): sigmaPaPOC,sigmaPaCa,sigmaPaOp,sigmaPaDu,sigmaPaNeph,sigmaThPOC,sigmaThCa,sigmaThOp,sigmaThDu,sigmaThNeph. The runname is ___NNNNPPP with ___ the ensemble ID (1P5 stands for 1st tuning ensemble with only 5 params per element i.e. ws and kdes fixed; 2P5 2nd ..); NNNN the specific parameter set as in the parameters_xxx_sampled_after_constraints.csv; PPP the phase (I only have 1 phase, which I call _PI)

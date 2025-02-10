@@ -1,0 +1,159 @@
+# PARAMETERS OF THE ENERGY BALANCE MODEL
+
+######################################################
+# GENERAL                                            #
+###################################################### 
+
+# number of atmospheric timesteps per year
+# if atmndtyear = 0 then it is set equal to ndtyear
+atmndtyear                               0
+
+# Ross and Weddell Sea freshwater flux correction 
+# (in Sv; fw flux out of the ocean)
+# boxes corresponding to fwrwregion and fwrwcompensregion are specified in fwmask
+fwrwamount                               0.07
+fwrwregion                               0.6
+fwrwcompensregion                        0.7
+
+# starting (i)year of albedo/SAT diagnostic (only when _ebm_ctrl_diag ist set)
+ebm_ctrl_diag_startyear                   1
+
+######################################################
+# HEAT                                               #
+###################################################### 
+
+# Total solar irradiance (solar constant) [W/m2]
+solarconst                               1365
+
+# zonal eddy-diffusivity [m2/s]
+# Kzon(theta) = c1 + (c2-c1)*cos^4(theta)
+c1                                       2.e5
+c2                                       2.e7
+
+# meridional eddy-diffusivity [m2/s]
+# is calculated as follows (latitude theta 
+# [-pi/2 pi/2]; a1: diffusivity at the south 
+# pole; a2: diffusivity at the north pole):
+# Kmer(theta) = a1 + (a2-a1)*(theta + pi/2)/pi + a3*cos^2(theta)
+a1                                       1.20e6
+a2                                       1.80e6
+a3                                       2.50e6
+
+# ocean emissivity
+epso                                     0.97
+
+# atmospheric emissivity
+# epsa = b1 + b2*cos^2(theta)
+b1                                       0.8
+b2                                       0.
+
+# environmental lapse rate [K/m]
+lapserate                                5.e-3
+
+# longwave outgoing radiation: effect of clouds
+# difference between surface temperature and
+# cloud-top temperature for overcast conditions [K]
+deltatmax                                9.0
+
+# prescribe climate sensitivity with feedback parameter [W/m2/K]
+# -lambda*(T-T_ctrl) term of equation (9) in Ritz et al. 2011, JC
+# acknowledging unaccounted physical feedbacks 
+# -0.71 W/m2/K yields a climate sensitivity of 3degrees for a doubling of CO2
+# requires preceding run with _ebm_ctrl_diag (diagnoses steady state atmospheric temperature, T_ctrl)
+# and is activated with _ebm_ctrl_perturb
+lambda                                   -0.71
+
+# radiative forcing
+# atmospheric co2 concentration (only used for radiative forcing) [ppm]
+radco2                                   278.05 (modern)
+#radco2                                   191.26 (lgm)
+# atmospheric ch4 concentration [ppb]
+radch4                                   721.89 (modern)
+#radch4                                   370.46 (lgm)
+# atmospheric n2o concentration [ppb] for rad. forcing (if -D_ebm_bgc_rad_n2o is not set)
+radn2o                                   272.96 (modern)
+#radn2o                                   208.26 (lgm)
+# ice sheet d18o (is used to interpolate btw modern and lgm ice sheet extent
+# using the lisiecki and raymo benthic d18o stack) [per mill]              
+icesheet_d18o                            3.2532 (modern)
+#icesheet_d18o                            4.8928 (lgm)
+#reference values for SL calculation
+icesheet_PI                              3.2532
+icesheet_LGM                             4.8928
+
+# sea-ice albedo
+albedo_seaice                            0.65
+# ice-sheet albedo
+albedo_icesheet                          0.7
+# snow albedo
+albedo_snow                              0.75
+
+
+######################################################
+# MOISTURE                                           #
+###################################################### 
+
+# maximum relative humidity
+relhmax                                  0.85
+
+# relative humidity after precipitation
+relhprecip                               0.85
+
+# zonal and meridional eddy-diffusivity [m2/s]
+diffmoist                                5.e5
+
+# scaling factors for zonal and meridional moisture advection
+betamoist_zonal                          0.5
+betamoist_meridional                     0.5
+
+
+######################################################
+# SEA ICE                                            #
+###################################################### 
+
+# number of sea ice timesteps per year
+# = n_ice_it * atmndtyear
+n_ice_it                                 10
+
+# sea-ice diffusivity [m2/s]
+diffice                                  1.5e4
+
+# sea-ice scaling coefficient for advection
+icebeta                                  0.3
+
+
+######################################################
+# LAND SURFACE                                       #
+###################################################### 
+
+# number of land timesteps per year
+# = n_land_it * atmndtyear
+n_land_it                                2
+
+# land surface scale height [m]
+# (e-folding depth of the seasonal temperature
+# variance at the surface)
+landscaleh                               2.0
+
+# emissivity
+epsl                                     1.
+
+# densitiy [kg/m3]
+rhol                                     2.e3
+
+# heat capacity [J/kg/K]
+# note that Antarcica is treated separately in the code
+heatcapl                                 1.48e3
+
+# transfer coeff for sensible heat [W/m2/K]
+Dl                                       3.0
+
+
+# PARAMETERS FOR THE BUCKET MODEL OF LAND HYDROLOGY
+
+# soil moisture capacity [m]
+maxmoisth                                0.15
+
+# soil moisture amount, after which water is transpired
+# at the potential evaporation rate
+potevapmoist                             0.10

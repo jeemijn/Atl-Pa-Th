@@ -1,0 +1,288 @@
+# Atmospheric CO2 (internal default value: bgcpco2pre)
+in_atmco2                                  1
+in_atmco2_filename                         missing.dat
+in_atmco2_column                           2
+in_atmco2_timescale                        AD
+in_atmco2_missingval                       278.05
+
+# Benthic d18O (proxy for ice volume) from Lisiecki and Stern, 2016
+# Paleoceanography for the interpolation btw. modern and lgm ice
+# sheet fields (internal default value: 3.2532)
+in_icesheet                                0
+in_icesheet_filename                       d18OLisiecki2016_10kyr_cutoff_spline.dat
+in_icesheet_column                         2
+in_icesheet_timescale                      BP
+in_icesheet_missingval                     3.2532
+
+# Alternative ice sheet scaling time series
+# Paleoceanography for the interpolation btw. modern and lgm ice
+# sheet fields. Use Barbados sea level record (peltier and fairbanks QSR 2006) scenario A/B
+# (See Ritz et al. QSR 2011 for further information)
+#in_icesheet                                0
+#in_icesheet_filename                       peltier06qsr_splineA.txt
+#in_icesheet_filename                       peltier06qsr_splineB.txt
+#in_icesheet_column                         2
+#in_icesheet_timescale                      BP
+#in_icesheet_missingval                     0
+
+
+# Fossil fuel CO2 emissions [GtC/yr] (internal default value: 0.0)
+in_ffemis                                  1
+in_ffemis_filename                         missing.dat
+in_ffemis_column                           2
+in_ffemis_timescale                        AD
+in_ffemis_missingval                       -1e30
+
+# C13 signature of fossil fuel CO2 emissions, d13C [permil] (internal default value: 0.0)
+in_ffemisd13                               1
+in_ffemisd13_filename                      missing.dat
+in_ffemisd13_column                        2
+in_ffemisd13_timescale                     AD
+in_ffemisd13_missingval                    0.0
+
+# Land use CO2 emissions [GtC/yr] (internal default value: 0.0)
+in_luemis                                  1
+in_luemis_filename                         missing.dat
+in_luemis_column                           2
+in_luemis_timescale                        AD
+in_luemis_missingval                       0.0
+
+# Terrestrial net ecosystem production [GtC/yr] (internal default value: 0.0)
+in_nep                                     1
+in_nep_filename                            missing.dat
+in_nep_column                              2
+in_nep_timescale                           AD
+in_nep_missingval                          -1e30
+
+# rad. forcing of CH4 (EBM-code only)
+in_atmradch4                               1
+in_atmradch4_filename                      missing.dat
+in_atmradch4_column                        2
+in_atmradch4_timescale                     AD
+in_atmradch4_missingval                    721.89
+
+# rad. forcing of CO2 (EBM-code only)
+in_atmradco2                               1
+in_atmradco2_filename                      missing.dat
+in_atmradco2_column                        2
+in_atmradco2_timescale                     AD
+in_atmradco2_missingval                    278.05
+
+# rad. forcing of N2O (EBM-code only, enable with -D_ebm_in_rad_n2o)
+in_atmradn2o                               1
+in_atmradn2o_filename                      missing.dat
+in_atmradn2o_column                        2
+in_atmradn2o_timescale                     AD
+in_atmradn2o_missingval                    272.96 
+
+# volcanic RF [W/m^2] (internal default value: 0.0)
+in_atmradnonC                              1
+in_atmradnonC_filename                     missing.dat
+in_atmradnonC_column                       2
+in_atmradnonC_timescale                    AD
+in_atmradnonC_missingval                   0.0
+
+# volcanic RF [W/m^2] (internal default value: 0.0)
+in_atmradnonC                              1
+in_atmradnonC_filename                     missing.dat
+in_atmradnonC_column                       2
+in_atmradnonC_timescale                    AD
+in_atmradnonC_missingval                   0.0
+
+# volcanic RF [W/m^2] (internal default value: 0.0)
+in_atmradnonCnat                           1
+in_atmradnonCnat_filename                  missing.dat
+in_atmradnonCnat_column                    2
+in_atmradnonCnat_timescale                 AD
+in_atmradnonCnat_missingval                0.0
+
+# Atmospheric n2o
+in_atmn2o                                  1
+in_atmn2o_filename                         missing.dat
+in_atmn2o_column                           2
+in_atmn2o_timescale                        AD
+in_atmn2o_missingval                       272.96
+
+# Atmospheric ch4
+in_atmch4                                  1
+in_atmch4_filename                         missing.dat
+in_atmch4_column                           2
+in_atmch4_timescale                        AD
+in_atmch4_missingval                       721.89
+
+# Atmospheric o3
+in_atmo3                                   1
+in_atmo3_filename                          missing.dat
+in_atmo3_column                            2
+in_atmo3_timescale                         AD
+in_atmo3_missingval                        25
+
+# external N2O emissions (TgN/yr)
+in_n2oemis_ext                             1
+in_n2oemis_ext_filename                    missing.dat
+in_n2oemis_ext_column                      2
+in_n2oemis_ext_timescale                   AD
+in_n2oemis_ext_missingval                  -1e30
+
+# anthropogenic N2O emissions (TgN/yr)
+in_n2oemis_anth                            1
+in_n2oemis_anth_filename                   missing.dat
+in_n2oemis_anth_column                     2
+in_n2oemis_anth_timescale                  AD
+in_n2oemis_anth_missingval                 0.0
+
+# anthropogenic CH4 emissions (TgCH4/yr)
+in_ch4emis_anth                            1
+in_ch4emis_anth_filename                   missing.dat
+in_ch4emis_anth_column                     2
+in_ch4emis_anth_timescale                  AD
+in_ch4emis_anth_missingval                 0.0
+
+# external CH4 emissions (TgCH4/yr)
+in_ch4emis_ext                            1
+in_ch4emis_ext_filename                   missing.dat
+in_ch4emis_ext_column                     2
+in_ch4emis_ext_timescale                  AD
+in_ch4emis_ext_missingval                 -1e30
+
+# NOx emissions (Tg/yr)
+in_noxemis                                 1
+in_noxemis_filename                        missing.dat
+in_noxemis_column                          2
+in_noxemis_timescale                       AD
+in_noxemis_missingval                      0.0
+
+# CO emissions (Tg/yr)
+in_coemis                                  1
+in_coemis_filename                         missing.dat
+in_coemis_column                           2
+in_coemis_timescale                        AD
+in_coemis_missingval                       0.0
+
+# VOC emissions (Tg/yr)
+in_vocemis                                 1
+in_vocemis_filename                        missing.dat
+in_vocemis_column                          2
+in_vocemis_timescale                       AD
+in_vocemis_missingval                      0.0
+
+
+# Solar irradiance (aka solar constant) [W/m^2] (internal default value: 1365.0)
+in_irrad                                   1
+in_irrad_filename                          missing.dat
+in_irrad_column                            2
+in_irrad_timescale                         AD
+#in_irrad_missingval                        1365.0
+
+# NH Atm. D14C (internal default value: 0.0, only used when _in_atmd14cHem is set)
+in_atmd14cN                                0
+in_atmd14cN_filename                       c13c14.dat
+in_atmd14cN_column                         2
+in_atmd14cN_timescale                      AD
+in_atmd14cN_missingval                     0.0
+
+# EQ Atm. D14C (internal default value: 0.0, only used when _in_atmd14cHem is set)
+in_atmd14cEQ                               0
+in_atmd14cEQ_filename                      c13c14.dat
+in_atmd14cEQ_column                        3
+in_atmd14cEQ_timescale                     AD
+in_atmd14cEQ_missingval                    0.0
+
+# SH Atm. D14C (internal default value: 0.0, only used when _in_atmd14cHem is set)
+in_atmd14cS                                0
+in_atmd14cS_filename                       c13c14.dat
+in_atmd14cS_column                         4
+in_atmd14cS_timescale                      AD
+in_atmd14cS_missingval                     0.0
+
+
+# Atm. d13C (internal default value: -6.305, only used when _in_atmd13c is set)
+in_atmd13c                                 0
+in_atmd13c_filename                        c13c14.dat
+in_atmd13c_column                          5
+in_atmd13c_timescale                       AD
+in_atmd13c_missingval                      0.0
+
+# NH atm CFC11 (internal default value: 0.0, only used when _tr_cfc11 is set)
+in_cfc11N                                  1
+in_cfc11N_filename                         CFCs_CCl4_SF6_Atm_Hist_1910-2011.dat
+in_cfc11N_column                           2
+in_cfc11N_timescale                        AD
+in_cfc11N_missingval                       0.0
+
+# SH atm CFC11 (internal default value: 0.0, only used when _tr_cfc11 is set)
+in_cfc11S                                  1
+in_cfc11S_filename                         CFCs_CCl4_SF6_Atm_Hist_1910-2011.dat
+in_cfc11S_column                           3
+in_cfc11S_timescale                        AD
+in_cfc11S_missingval                       0.0
+
+# NH atm CFC12 (internal default value: 0.0, only used when _tr_cfc12 is set)
+in_cfc12N                                  1
+in_cfc12N_filename                         CFCs_CCl4_SF6_Atm_Hist_1910-2011.dat
+in_cfc12N_column                           4
+in_cfc12N_timescale                        AD
+in_cfc12N_missingval                       0.0
+
+# SH atm CFC12 (internal default value: 0.0, only used when _tr_cfc12 is set)
+in_cfc12S                                  1
+in_cfc12S_filename                         CFCs_CCl4_SF6_Atm_Hist_1910-2011.dat
+in_cfc12S_column                           5
+in_cfc12S_timescale                        AD
+in_cfc12S_missingval                       0.0
+
+# SAT [°C] for temperature tracking (only used when _atmcpl_temptrack is set)
+in_temp                                    0
+in_temp_filename                           sat_4.0deg.dat
+in_temp_column                             2
+in_temp_timescale                          AD
+#in_temp_missingval                         -1e30
+
+# C14 Production (internal default value: atmc14prod)
+in_c14prod                                 0
+in_c14prod_filename                        C14Prod_Laj02epsl.dat
+in_c14prod_column                          2
+in_c14prod_timescale                       BP
+#in_c14prod_missingval                      0.0
+
+# Freshwater perturbation: H1 & B/A & YD (internal default value: 0.0)
+in_fwperturb                               0
+in_fwperturb_filename                      fwperturb.dat
+in_fwperturb_column                        2
+in_fwperturb_timescale                     BP
+#in_fwperturb_missingval                   0.0
+
+##################################################
+# Other forcings (not read in by tinputseries.F) #
+##################################################
+
+# Sulphate aerosol optical depth forcing (2d-field timeseries) [1]
+# ==> Only used when the '_ebm_aerosol_od' flag is set.
+# (NOTE: Set startyear > endyear to disable the forcing even when _ebm_aerosol_od is used.)
+aerosol_od_filename                        so4od_UVic_1855-2105_b3d.nc
+aerosol_od_varname                         SO4OD_RCP85
+aerosol_od_startyear                       3000
+aerosol_od_endyear                         2105
+
+# Specify a year after which a constant orbital forcing should be applied.
+# ==> Only used when the '_ebm_const_insol_after_year' flag is set.
+atminsol_const_year                        2005
+
+#parameters read-in if -D_irf_pulse ist set in build.conf
+#year of the pulse emission:
+irf_pulseyear                              2015
+
+#release pulse in first tstep of the year     (choose 'begin'),
+#or distribute the pulse over the whole year  (choose 'distr')
+irf_timing                                 begin
+
+# size of the pulse in GtC
+irf_pulsesize                              100.0
+
+#delta 13-C signature of the carbon injected:
+irf_d13sign                                -24.0
+
+# delta 14-C signature of the carbon injected (insert 9999 for radiocarbon dead material):
+irf_d14sign                                0.0
+
+# EOF
